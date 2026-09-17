@@ -3,7 +3,7 @@
 A minimal Express server that stores and retrieves data from MongoDB. When a request
 reaches Express, Express queries MongoDB, and the data comes back as JSON.
 
-## Project structure
+## Structure
 
 ```
 .
@@ -37,7 +37,7 @@ PORT=3000
 
 ## Run
 
-Start MongoDB in a container (first time only — creates and starts it):
+Start MongoDB in a container:
 
 ```bash
 docker run -d -p 27017:27017 --name mongo mongo
@@ -57,17 +57,20 @@ npm run dev
 
 ## API
 
-| Method | Path          | Purpose                              |
-|--------|---------------|--------------------------------------|
-| POST   | `/api/rooms`  | Create a room, returns its id        |
-| GET    | `/api/rooms`  | List all rooms (`find().toArray()`)  |
+| Method | Path             | Purpose                                    |
+|--------|------------------|--------------------------------------------|
+| POST   | `/api/rooms`     | Create a room, returns its id (`insertOne`) |
+| GET    | `/api/rooms`     | List all rooms (`find().toArray()`)         |
+| GET    | `/api/rooms/:id` | Get one room by id (`findOne`)              |
+| PUT    | `/api/rooms/:id` | Update a room's name (`updateOne` + `$set`) |
+| DELETE | `/api/rooms/:id` | Delete a room (`deleteOne`)                 |
 
 ## Test
 
 ```bash
 # create → returns { "roomId": "..." }
 ROOM=$(curl -s -X POST http://localhost:3000/api/rooms \
-  -H "Content-Type: application/json" -d '{"name":"jam session"}' \
+  -H "Content-Type: application/json" -d '{"name":"yuki"}' \
   | sed 's/.*"roomId":"\([^"]*\)".*/\1/')
 
 curl http://localhost:3000/api/rooms            # read all
@@ -78,15 +81,7 @@ curl http://localhost:3000/api/rooms/$ROOM      # confirm the rename
 curl -X DELETE http://localhost:3000/api/rooms/$ROOM            # delete
 curl http://localhost:3000/api/rooms/$ROOM      # now 404 — confirms delete
 ```
-
-```bash
-# stop the server (Ctrl+C), start it again
-npm run dev
-# re-run the GET — the room should still be there
-curl http://localhost:3000/api/rooms
-```
-
-Or inspect the database:
+Inspect the database:
 
 - **MongoDB Compass** (GUI): connect to `mongodb://localhost:27017`, open the
   `demo` database → `rooms` collection.
@@ -98,7 +93,7 @@ Or inspect the database:
   db.rooms.find()
   ```
 
-## Container commands
+## Docker commands
 
 | Command              | Purpose                           |
 |----------------------|-----------------------------------|
