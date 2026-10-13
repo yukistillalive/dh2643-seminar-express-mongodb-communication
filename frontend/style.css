@@ -1,0 +1,32 @@
+body {
+  font-family: sans-serif;
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+#create-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#name-input {
+  flex: 1;
+}
+
+#room-list {
+  list-style: none;
+  padding: 0;
+}
+
+#room-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+#room-list li span {
+  flex: 1;
+}

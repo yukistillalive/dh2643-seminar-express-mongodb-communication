@@ -1,0 +1,32 @@
+services:
+  mongo:
+    image: mongo
+    container_name: dh2643-demo-mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - dh2643-demo-mongo-data:/data/db
+
+  backend:
+    build: .
+    container_name: dh2643-demo-backend
+    depends_on:
+      - mongo
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/demo
+      PORT: 3000
+
+  frontend:
+    image: nginx:alpine
+    container_name: dh2643-demo-frontend
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-5500}:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+
+volumes:
+  dh2643-demo-mongo-data:
