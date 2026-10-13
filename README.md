@@ -27,7 +27,7 @@ docker compose up --build
 ```
 
 - Frontend: `http://localhost:5500`
-- API: `http://localhost:3000`
+- To test the API: `http://localhost:3000/api/rooms`
 - MongoDB: `mongodb://localhost:27018`
 Stop with `docker compose down` (add `-v` to also delete the data volume).
 
@@ -44,3 +44,11 @@ Stop with `docker compose down` (add `-v` to also delete the data volume).
 ## Inspecting the database
 
 Or connect MongoDB Compass (Add-on in VS Code) to `mongodb://localhost:27018`.
+
+## Troubleshooting
+
+**Frontend returns 404 / nginx logs `stat() "/usr/share/nginx/html" failed (1: Operation not permitted)`**
+macOS is blocking Docker from reading the bind-mounted `./frontend` folder
+(common when the project lives in `~/Documents`). Grant Docker access under
+System Settings → Privacy & Security → Files and Folders (or Full Disk Access),
+restart Docker Desktop, then run `docker compose up -d --force-recreate frontend`.
