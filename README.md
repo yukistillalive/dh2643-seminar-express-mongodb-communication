@@ -43,10 +43,4 @@ Stop with `docker compose down` (add `-v` to also delete the data volume).
 
 ## Inspecting the database
 
-```bash
-docker exec -it dh2643-demo-mongo mongosh
-use demo
-db.rooms.find()
-```
-
-Or connect MongoDB Compass to `mongodb://localhost:27018`.
+Or connect MongoDB Compass (Add-on in VS Code) to `mongodb://localhost:27018`.
