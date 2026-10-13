@@ -28,9 +28,7 @@ docker compose up --build
 
 - Frontend: `http://localhost:5500`
 - API: `http://localhost:3000`
-- MongoDB: `mongodb://localhost:27018` (separate container/volume from any
-  other MongoDB instance you may be running elsewhere)
-
+- MongoDB: `mongodb://localhost:27018`
 Stop with `docker compose down` (add `-v` to also delete the data volume).
 
 ## API
